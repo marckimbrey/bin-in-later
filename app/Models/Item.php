@@ -9,5 +9,12 @@ class Item extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'product',
+        'box_size',
+        'boxes',
+        'file_name'
+    ];
+
     
 }

@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 
 class ItemController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +19,8 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+        return view('items.items', ['items' => $items]);
     }
 
     /**
@@ -24,7 +30,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('items.create');
     }
 
     /**
@@ -35,7 +41,19 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated_request = $request->validate([
+            'product' => 'required',
+            'box_size' => 'required',
+            'boxes' => 'required',
+            'file_name' => 'required'
+        ]);
+        
+    
+        Item::create($validated_request);
+
+        redirect('/items');
+
+         
     }
 
     /**
@@ -46,7 +64,9 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+       $db_item =  Item::where('id', $item->id)->firstOrFail();
+       
+       return view('items.item', ['item' => $db_item]);
     }
 
     /**
@@ -57,7 +77,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        return view('items.edit', ['item' => $item]);
     }
 
     /**
@@ -69,7 +89,16 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        //
+        $validated_request = $request->validate([
+            'product' => 'required',
+            'box_size' => 'required',
+            'boxes' => 'required',
+            'file_name' => 'required'
+        ]);
+
+        $item->update($validated_request);
+        
+        return redirect('/items');
     }
 
     /**
@@ -80,6 +109,7 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        //
+        $item->delete();
+        return redirect('/items');
     }
 }

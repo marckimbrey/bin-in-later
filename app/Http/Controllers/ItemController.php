@@ -130,24 +130,4 @@ class ItemController extends Controller
         return redirect('/items');
     }
 
-    public function fileUpload(Request $request){
-        $req->validate([
-        'file_name'
-        ]);
-
-        $fileModel = new File;
-
-        if($req->file_name()) {
-            $fileName = time().'_'.$req->file->getClientOriginalName();
-            $filePath = $req->file('file')->storeAs('barcodes', $fileName, 'public');
-
-            $fileModel->name = time().'_'.$req->file->getClientOriginalName();
-            $fileModel->file_path = '/storage/' . $filePath;
-            $fileModel->save();
-
-            return back()
-            ->with('success','File has been uploaded.')
-            ->with('file', $fileName);
-        }
-   }
 }

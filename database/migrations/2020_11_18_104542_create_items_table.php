@@ -18,6 +18,7 @@ class CreateItemsTable extends Migration
             $table->string('product');
             $table->integer('box_size');
             $table->integer('boxes');
+            $table->string('location');
             $table->string('file_name');
             $table->timestamps();
         });

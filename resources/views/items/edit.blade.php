@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="conainer"></div>
-    <form action="/items/{{ $item->id }}" method="POST">
+    <form action="/items/{{ $item->id }}" method="POST" enctype="multipart/form-data">
     @method('PUT')
     @csrf
         <div class="form-section">
@@ -18,8 +18,12 @@
             <input type="text" name="boxes" value="{{$item->boxes}}">
         </div>
         <div class="form-section">
+            <label for="location">    location</label>
+            <input type="text" name="location">
+        </div>
+        <div class="form-section">
             <label for="file_name">file name</label>
-            <input type="text" name="file_name" value="{{$item->file_name}}">
+            <input type="file" accept="image/*" capture="camera" name="file_name" value="{{ $item->file_name }}">
         </div>
         <button type="submit">submit</button>
     </form>

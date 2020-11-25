@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use App\Models\File;
 
 class ItemController extends Controller
 {
@@ -41,17 +43,26 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        $validated_request = $request->validate([
+
+        
+
+        $validated = $request->validate([
             'product' => 'required',
             'box_size' => 'required',
             'boxes' => 'required',
+            'location' => 'required',
             'file_name' => 'required'
         ]);
         
-    
-        Item::create($validated_request);
+        $path = $request->file('file_name')->store('barcodes');
 
-        redirect('/items');
+
+
+
+        $validated['file_name'] = $path;
+        Item::create($validated);
+
+        return redirect()->route('items.index');
 
          
     }
@@ -89,16 +100,22 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        $validated_request = $request->validate([
+        $validated = $request->validate([
             'product' => 'required',
             'box_size' => 'required',
             'boxes' => 'required',
             'file_name' => 'required'
         ]);
+        // delete existing file
+        Storage::delete($item->file_name);
+        // save new file to disc
+        $path = $request->file('file_name')->store('barcodes');
+        // update file path
+        $validated['file_name'] = $path;
 
-        $item->update($validated_request);
+        $item->update($validated);
         
-        return redirect('/items');
+        return redirect()->route('items.index');
     }
 
     /**
@@ -112,4 +129,25 @@ class ItemController extends Controller
         $item->delete();
         return redirect('/items');
     }
+
+    public function fileUpload(Request $request){
+        $req->validate([
+        'file_name'
+        ]);
+
+        $fileModel = new File;
+
+        if($req->file_name()) {
+            $fileName = time().'_'.$req->file->getClientOriginalName();
+            $filePath = $req->file('file')->storeAs('barcodes', $fileName, 'public');
+
+            $fileModel->name = time().'_'.$req->file->getClientOriginalName();
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+
+            return back()
+            ->with('success','File has been uploaded.')
+            ->with('file', $fileName);
+        }
+   }
 }

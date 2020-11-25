@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <form action="/items" method="POST">
+    <form action="/items" method="POST" enctype="multipart/form-data">
     @csrf
         <div class="form-section">
             <label for="product"> Product</label>
@@ -17,8 +17,12 @@
             <input type="text" name="boxes">
         </div>
         <div class="form-section">
+            <label for="location">    location</label>
+            <input type="text" name="location">
+        </div>
+        <div class="form-section">
             <label for="file_name">file name</label>
-            <input type="text" name="file_name">
+            <input type="file" accept="image/*" capture="camera" name="file_name">
         </div>
         <button type="submit">submit</button>
     </form>

@@ -20,7 +20,7 @@
             <tr>
                 <td><a href="/items/{{ $item->id }}">{{ $item->product }}</a></td>
                 <td> {{ $item->boxes * $item->boxes }}</td>
-                <td>todo</td>
+                <td> {{ $item->location }}</td>
                 <td>{{ $item->file_name }}</td>
                 <td><form action="/items/{{ $item->id }}" method="post">
                     @csrf

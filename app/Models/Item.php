@@ -13,6 +13,7 @@ class Item extends Model
         'product',
         'box_size',
         'boxes',
+        'location',
         'file_name'
     ];
 

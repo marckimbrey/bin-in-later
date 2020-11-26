@@ -9,7 +9,6 @@
             <th scope="col">Product</th>
             <th scope="col">Quanity</th>
             <th scope="col">location</th>
-            <th scope="col">file</th>
             <th scope="col">delete</th>
 </tr>
 
@@ -21,11 +20,10 @@
                 <td><a href="/items/{{ $item->id }}">{{ $item->product }}</a></td>
                 <td> {{ $item->boxes * $item->boxes }}</td>
                 <td> {{ $item->location }}</td>
-                <td>{{ $item->file_name }}</td>
                 <td><form action="/items/{{ $item->id }}" method="post">
                     @csrf
                     @method('DELETE')
-                        <input type="submit" name="item" value="{{ $item->id}}" />
+                    <button  class="btn btn-danger" name="item" value="{{ $item->id }} type="submit">delete</button>
                 </form>
                 </td>  
             </tr>

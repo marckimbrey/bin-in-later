@@ -20,8 +20,22 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
+    <div class="relative flex items-top d-flex justify-content-end min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+        @if (Route::has('login'))
+            <div class="hidden flex justify-content-end fixed top-0 right-0 px-6 py-4 ">
+                @auth
+                    <a href="{{ url('/items') }}" class=" mr-4 text-sm text-secondary underline">Home</a>
+                @else
+                    <a href="{{ route('login') }}" class=" mr-4 text-sm text-secondary underline">Login</a>
 
- 
+                    @if (Route::has('register'))
+                        <a href="{{ route('register') }}" class="mr-4 text-sm text-secondary underline">Register</a>
+                    @endif
+                @endauth
+            </div>
+        @endif
+    </div>
+
         <main class="py-4">
             @yield('content')
         </main>

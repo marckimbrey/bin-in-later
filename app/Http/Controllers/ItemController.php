@@ -51,7 +51,7 @@ class ItemController extends Controller
             'box_size' => 'required',
             'boxes' => 'required',
             'location' => 'required',
-            'file_name' => 'required'
+            'file_name' => 'required|image|mimes:jpg,png,jpeg,gif,svg'
         ]);
         
         $path = $request->file('file_name')->store('barcodes');
@@ -104,7 +104,7 @@ class ItemController extends Controller
             'product' => 'required',
             'box_size' => 'required',
             'boxes' => 'required',
-            'file_name' => 'required'
+            'file_name' => 'required|image|mimes:jpg,png,jpeg,gif,svg'
         ]);
         // delete existing file
         Storage::delete($item->file_name);
